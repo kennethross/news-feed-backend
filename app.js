@@ -56,14 +56,18 @@ app.use((error, req, res, next) => {
   const status = error.statusCode || 500;
   const message = error.message;
   const data = error.data;
-  res.status(status).json({ message: message, data: data });
+  res.status(status).json(
+    {
+      code: status,
+      description: message,
+      data: data
+    });
 });
 
 mongoose
   .connect(
-    'mongodb://localhost/myapp',
+    'mongodb+srv://admin:admin@news-feed.v4uvs.mongodb.net/news-feed?retryWrites=true&w=majority',
     { useNewUrlParser: true, useUnifiedTopology: true }
-    // 'mongodb+srv://maximilian:9u4biljMQc4jjqbe@cluster0-ntrwp.mongodb.net/messages?retryWrites=true'
   )
   .then(result => {
     app.listen(8080);
